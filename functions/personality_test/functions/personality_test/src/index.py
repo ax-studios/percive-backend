@@ -1,6 +1,6 @@
-import pprint
 from appwrite.client import Client
 
+# You can remove imports of services you don't use
 from appwrite.services.account import Account
 from appwrite.services.avatars import Avatars
 from appwrite.services.databases import Databases
@@ -10,8 +10,7 @@ from appwrite.services.locale import Locale
 from appwrite.services.storage import Storage
 from appwrite.services.teams import Teams
 from appwrite.services.users import Users
-# import db
-# from db import connection, quotes, tags, tags_quotes
+import json
 
 """
   'req' variable has:
@@ -30,6 +29,7 @@ from appwrite.services.users import Users
 def main(req, res):
     client = Client()
 
+    # You can remove services you don't use
     account = Account(client)
     avatars = Avatars(client)
     database = Databases(client)
@@ -51,32 +51,12 @@ def main(req, res):
             .set_key(req.variables.get("APPWRITE_FUNCTION_API_KEY", None))
             .set_self_signed(True)
         )
-        # if req.get("payload").get("tag") is not None:
 
-        #     tags = req.get("payload").get("tag")
-        #     if isinstance(tags, str):
-        #         tags = [tags]
+        # load json file from storage
+        file = storage.get_file_preview(
+            file_id="5f9f1b1b4b0b5",
+            project="5f9f1b1b4b0b5",
+            key="5f9f1b1b4b0b5",
+        ).json
 
-        #     stmt = f"""
-        #     SELECT quotes.quote FROM tags_quotes 
-        #         join quotes on tags_quotes.quote_id = quotes.id
-        #         join tags on tags_quotes.tag_id = tags.id
-        #         where tags.tag in ({str([i for i in tags])[1:-1]})
-        #     """
-        #     result = connection.execute(stmt).fetchall()
-
-        #     if len(result) > 0:
-        #         return res.json({"quotes": [i[0] for i in result]})
-
-        # else:
-        #     return res.json({"error": "tag not found"}, 400)
-
-    return res.json(
-        {
-            "areDevelopersAwesome": True,
-            "hello": "apwrite",
-        }
-    )
-
-
-# main({"payload": {"tag": ['happy','happiness','joy']}}, None)
+    return res.json({"questions": file})

@@ -1,0 +1,20 @@
+{
+    "projectId": "percive-htf",
+    "projectName": "percive",
+    "functions": [
+        {
+            "$id": "63de7890af00ea27e222",
+            "name": "personality_test",
+            "runtime": "python-3.9",
+            "path": "functions/personality_test",
+            "entrypoint": "src/index.py",
+            "ignore": [
+                "__pypackages__"
+            ],
+            "execute": [],
+            "events": [],
+            "schedule": "",
+            "timeout": 15
+        }
+    ]
+}
